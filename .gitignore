@@ -6,6 +6,7 @@
 /example/pages/.umi
 /example/pages/.umi-production
 /lib
+.npmrc
 
 # misc
 .DS_Store
