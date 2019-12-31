@@ -6,4 +6,14 @@
 /example/pages/.umi
 /example/pages/.umi-production
 /lib
-.idea/
+
+# misc
+.DS_Store
+npm-debug.log*
+yarn-error.log
+
+/coverage
+.idea
+package-lock.json
+*bak
+.vscode
