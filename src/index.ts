@@ -1,5 +1,10 @@
 import { IApi } from 'umi-types';
 
+function getPathFromImportPath(importPath) {
+  const result = /^\.\.([\/\w-$]+)\.\w+$/.exec(importPath);
+  return result && result[1];
+}
+
 export default function(api: IApi, options) {
   // .umi/route.js 中加入 import wrapChildrenWithAliveScope from 'umi-plugin-keep-alive/lib/wrapChildrenWithAliveScope' 语句
   api.addRouterImport({
@@ -20,13 +25,23 @@ export default function(api: IApi, options) {
   });
 
   api.modifyRouteComponent((memo, args) => {
-    return `wrapChildrenWithKeepAlive(${memo})`;
+    const exclude = options && options.exclude;
+    const name = getPathFromImportPath(args.importPath);
+
+    if (exclude) {
+      const isExclude = exclude.some((item: string | RegExp) => {
+        if (item instanceof RegExp) {
+          return item.test(name);
+        }
+        return item === name;
+      });
+
+      if (isExclude) {
+        return memo;
+      }
+    }
+    return `wrapChildrenWithKeepAlive(${memo}, '${name}')`;
   });
-  // routes.forEach(route => {
-  //   if (route.path && (options.exclude ? options.exclude.includes(route.path) : true)) {
-  //     route.component
-  //   }
-  // });
 
   api.modifyAFWebpackOpts(memo => {
     // 注入 babel 插件 react-activation/babel

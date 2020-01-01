@@ -9,24 +9,24 @@
   "repository": "https://github.com/MinJieLiu/umi-plugin-activation-route-modify",
   "peerDependencies": {
     "react-activation": "^0.3.4",
-    "umi": "2.x || ^2.9.0-0"
+    "umi": "2.x"
   },
   "main": "lib/index.js",
   "scripts": {
-    "start": "cross-env APP_ROOT=$PWD/example umi dev",
+    "start": "cross-env APP_ROOT=example umi dev",
     "build": "father-build",
     "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish"
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
-    "father-build": "^1.8.0",
+    "father-build": "^1.17.1",
     "np": "^5.0.3",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-activation": "^0.3.4",
-    "umi": "^2.9.0",
+    "umi": "^2.12.8",
     "umi-plugin-react": "^1.14.11",
-    "umi-types": ">= 0.4.0-beta.4"
+    "umi-types": "^0.5.10"
   },
   "files": [
     "lib",

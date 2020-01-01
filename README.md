@@ -5,6 +5,8 @@
 
 KeepAlive with umi route.
 
+Refer [umi-plugin-keep-alive](https://github.com/alitajs/umi-plugin-keep-alive)
+
 ## Install
 
 ```bash
@@ -24,14 +26,20 @@ Configure in `.umirc.js`,
 ```js
 export default {
   plugins: [
-    ['umi-plugin-umi-plugin-activation-route-modify', options],
+    ['umi-plugin-activation-route-modify', options],
   ],
 }
 ```
 
 ## Options
 
-TODO
+```ts
+
+interface IOptions {
+  exclude: string[] | RegExp[];
+}
+
+```
 
 ## LICENSE
 
