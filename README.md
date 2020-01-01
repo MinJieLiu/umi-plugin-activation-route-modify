@@ -36,7 +36,7 @@ export default {
 ```ts
 
 interface IOptions {
-  exclude: string[] | RegExp[];
+  exclude: (string | RegExp)[];
 }
 
 ```
