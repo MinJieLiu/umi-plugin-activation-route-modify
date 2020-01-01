@@ -5,18 +5,14 @@
 
 KeepAlive with umi route.
 
+> Note: Only file routing is currently supported
+
 Refer [umi-plugin-keep-alive](https://github.com/alitajs/umi-plugin-keep-alive)
 
 ## Install
 
 ```bash
-# or yarn
-$ npm install
-```
-
-```bash
-$ npm run build --watch
-$ npm run start
+yarn add umi-plugin-activation-route-modify
 ```
 
 ## Usage
@@ -34,12 +30,15 @@ export default {
 ## Options
 
 ```ts
-
 interface IOptions {
+  // File path
   exclude: (string | RegExp)[];
 }
-
 ```
+
+## example
+
+[https://github.com/MinJieLiu/umi-plugin-activation-route-modify/tree/master/example](https://github.com/MinJieLiu/umi-plugin-activation-route-modify/tree/master/example)
 
 ## LICENSE
 
