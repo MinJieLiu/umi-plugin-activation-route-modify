@@ -1,6 +1,6 @@
 {
   "name": "umi-plugin-activation-route-modify",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "KeepAlive with umi route.",
   "authors": {
     "name": "MinJieLiu",
