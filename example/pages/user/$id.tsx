@@ -1,19 +1,19 @@
 import React from 'react';
-import { Link, router } from 'umi';
+import { router, RouterTypes } from 'umi';
 
-export default function() {
+const UserInfo: React.FC<RouterTypes<{}, { id: string }>> = ({ computedMatch: { params } }) => {
   const [count, setCount] = React.useState(0);
+
   return (
     <div>
-      <h1>Page test</h1>
+      <h1>Page UserInfo</h1>
       <a onClick={router.goBack}>Go back</a>
-      <div>test</div>
+      <div>params: {params.id}</div>
       <div>
         Count: {count} <button onClick={() => setCount(count + 1)}>Add</button>
       </div>
-      <div>
-        <Link to="/user/1">to UserInfo</Link>
-      </div>
     </div>
   );
-}
+};
+
+export default UserInfo;

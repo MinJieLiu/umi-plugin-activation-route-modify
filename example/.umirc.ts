@@ -26,6 +26,6 @@ export default {
         },
       },
     ],
-    ['umi-plugin-activation-route-modify', { exclude: ['/test'] }],
+    ['umi-plugin-activation-route-modify', { exclude: ['/index', '/test'] }],
   ],
 } as IConfig;

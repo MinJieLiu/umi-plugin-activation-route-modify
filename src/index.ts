@@ -4,8 +4,17 @@ interface IOptions {
   exclude: (string | RegExp)[];
 }
 
+const excludesPath = ['layouts', '_layout'];
+
 function getRoutePathFromImportPath(importPath) {
+  // 只匹配 page 下的路径
   const result = /^\.\.([\/\w-$]+)\.\w+$/.exec(importPath);
+  const resultPath = result && result[1];
+  // 排除 layouts
+  if (resultPath && excludesPath.some(n => resultPath.includes(n))) {
+    return null;
+  }
+
   return result && result[1];
 }
 
@@ -32,6 +41,10 @@ export default function(api: IApi, options: IOptions) {
   api.modifyRouteComponent((memo, args) => {
     const exclude = options && options.exclude;
     const routePath = getRoutePathFromImportPath(args.importPath);
+
+    if (!routePath) {
+      return memo;
+    }
 
     if (exclude) {
       const isExclude = exclude.some((item: string | RegExp) => {
