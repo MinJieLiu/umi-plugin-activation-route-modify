@@ -1,11 +1,16 @@
 import { IApi } from 'umi-types';
 
-function getPathFromImportPath(importPath) {
+interface IOptions {
+  exclude: (string | RegExp)[];
+}
+
+function getRoutePathFromImportPath(importPath) {
   const result = /^\.\.([\/\w-$]+)\.\w+$/.exec(importPath);
   return result && result[1];
 }
 
-export default function(api: IApi, options) {
+// umi-plugin-activation-route-modify
+export default function(api: IApi, options: IOptions) {
   // .umi/route.js 中加入 import wrapChildrenWithAliveScope from 'umi-plugin-keep-alive/lib/wrapChildrenWithAliveScope' 语句
   api.addRouterImport({
     source: 'umi-plugin-activation-route-modify/lib/wrapChildrenWithAliveScope',
@@ -26,21 +31,21 @@ export default function(api: IApi, options) {
 
   api.modifyRouteComponent((memo, args) => {
     const exclude = options && options.exclude;
-    const name = getPathFromImportPath(args.importPath);
+    const routePath = getRoutePathFromImportPath(args.importPath);
 
     if (exclude) {
       const isExclude = exclude.some((item: string | RegExp) => {
         if (item instanceof RegExp) {
-          return item.test(name);
+          return item.test(routePath);
         }
-        return item === name;
+        return item === routePath;
       });
 
       if (isExclude) {
         return memo;
       }
     }
-    return `wrapChildrenWithKeepAlive(${memo}, '${name}')`;
+    return `wrapChildrenWithKeepAlive(${memo}, '${routePath}')`;
   });
 
   api.modifyAFWebpackOpts(memo => {

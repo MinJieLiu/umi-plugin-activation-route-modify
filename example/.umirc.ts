@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { IConfig } from 'umi-types';
 
 export default {
@@ -27,6 +26,6 @@ export default {
         },
       },
     ],
-    join(__dirname, '..', require('../package').main || 'index.js'),
+    ['umi-plugin-activation-route-modify', { exclude: ['/test'] }],
   ],
 } as IConfig;
