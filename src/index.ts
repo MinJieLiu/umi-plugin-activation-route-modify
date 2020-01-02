@@ -4,18 +4,22 @@ interface IOptions {
   exclude: (string | RegExp)[];
 }
 
-const excludesPath = ['layouts', '_layout'];
-
-function getRoutePathFromImportPath(importPath) {
-  // 只匹配 page 下的路径
-  const result = /^\.\.([\/\w-$]+)\.\w+$/.exec(importPath);
-  const resultPath = result && result[1];
-  // 排除 layouts
-  if (resultPath && excludesPath.some(n => resultPath.includes(n))) {
-    return null;
-  }
-
-  return result && result[1];
+/**
+ * 获取路由列表
+ *
+ * 不包含 layout
+ * @param routes
+ */
+function getFlatRouteList(routes) {
+  return routes
+    .filter(n => n.path)
+    .reduce((prev, curr) => {
+      if (!curr.routes) {
+        return prev.concat(curr);
+      }
+      // 过滤节点上有 routes 的 layout
+      return prev.concat(getFlatRouteList(curr.routes));
+    }, []);
 }
 
 // umi-plugin-activation-route-modify
@@ -39,8 +43,9 @@ export default function(api: IApi, options: IOptions) {
   });
 
   api.modifyRouteComponent((memo, args) => {
+    const flatRouteList = getFlatRouteList(api.routes);
     const exclude = options && options.exclude;
-    const routePath = getRoutePathFromImportPath(args.importPath);
+    const routePath = flatRouteList.find(n => n.component === args.component)?.path;
 
     if (!routePath) {
       return memo;

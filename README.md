@@ -5,8 +5,6 @@
 
 KeepAlive with umi route.
 
-> Note: Only file routing is currently supported
-
 Refer [umi-plugin-keep-alive](https://github.com/alitajs/umi-plugin-keep-alive)
 
 ## Install
@@ -31,7 +29,7 @@ export default {
 
 ```ts
 interface IOptions {
-  // File path
+  // Route path
   exclude: (string | RegExp)[];
 }
 ```
