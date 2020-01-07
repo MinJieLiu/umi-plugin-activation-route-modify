@@ -5,7 +5,13 @@ export default function() {
   return (
     <div>
       <h1>Page index</h1>
-      <Link to="/test">to test</Link>
+      <div>index</div>
+      <div>
+        <Link to="/test">to test</Link>
+      </div>
+      <div>
+        <Link to="/demo">to demo</Link>
+      </div>
     </div>
   );
 }

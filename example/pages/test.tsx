@@ -12,7 +12,16 @@ export default function() {
         Count: {count} <button onClick={() => setCount(count + 1)}>Add</button>
       </div>
       <div>
-        <Link to="/user/1">to UserInfo</Link>
+        <Link to="/user/1">to User 1</Link>
+      </div>
+      <div>
+        <Link to="/user/2">to User 2</Link>
+      </div>
+      <div>
+        <Link to="/user/2?name=jack">to User 2 with query</Link>
+      </div>
+      <div>
+        <Link to="/user/3">to User 3</Link>
       </div>
     </div>
   );

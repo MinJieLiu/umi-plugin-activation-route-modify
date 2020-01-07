@@ -1,4 +1,5 @@
 import { IApi } from 'umi-types';
+import { generateFlatRouteFunc } from './utils';
 
 interface IOptions {
   exclude: (string | RegExp)[];
@@ -6,21 +7,10 @@ interface IOptions {
 
 /**
  * 获取路由列表
- *
  * 不包含 layout
  * @param routes
  */
-function getFlatRouteList(routes) {
-  return routes
-    .filter(n => n.path)
-    .reduce((prev, curr) => {
-      if (!curr.routes) {
-        return prev.concat(curr);
-      }
-      // 过滤节点上有 routes 的 layout
-      return prev.concat(getFlatRouteList(curr.routes));
-    }, []);
-}
+const getFlatRouteList = generateFlatRouteFunc();
 
 // umi-plugin-activation-route-modify
 export default function(api: IApi, options: IOptions) {
