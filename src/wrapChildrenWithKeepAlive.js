@@ -12,6 +12,7 @@ export default (Component, routePath) => props => {
       name={pathname + search}
       id={pathname + search}
       routePath={routePath}
+      pathname={pathname}
       params={params}
       search={search}
     >
