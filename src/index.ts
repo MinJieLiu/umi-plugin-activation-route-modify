@@ -53,6 +53,16 @@ export default function(api: IApi, options: IOptions) {
         return memo;
       }
     }
+    if (memo.includes('_dvaDynamic')) {
+      const { importPath, webpackChunkName } = args;
+      const dynamicImport = `import(/* webpackChunkName: ^${webpackChunkName}^ */'${importPath}')`;
+
+      return memo.replace(
+        dynamicImport,
+        `${dynamicImport}.then(m => wrapChildrenWithKeepAlive(m.default, '${routePath}'))`,
+      );
+    }
+
     return `wrapChildrenWithKeepAlive(${memo}, '${routePath}')`;
   });
 
