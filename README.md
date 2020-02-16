@@ -31,6 +31,8 @@ export default {
 interface IOptions {
   // Route path
   exclude: (string | RegExp)[];
+  // Page layout, Should add src/layouts/PageLayout.jsx
+  enablePageLayout?: boolean;
 }
 ```
 

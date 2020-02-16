@@ -7,6 +7,7 @@ import { KeepAlive } from 'react-activation';
  */
 function createKeepAliveFunc() {
   let Component;
+  let PageLayout;
   let routePath;
 
   function KeepAliveWrap(props) {
@@ -24,13 +25,20 @@ function createKeepAliveFunc() {
         params={params}
         search={search}
       >
-        <Component {...props} />
+        {PageLayout ? (
+          <PageLayout>
+            <Component {...props} />
+          </PageLayout>
+        ) : (
+          <Component {...props} />
+        )}
       </KeepAlive>
     );
   }
 
-  return (NextComponent, nextRoutePath) => {
+  return (NextComponent, NextPageLayout, nextRoutePath) => {
     Component = NextComponent;
+    PageLayout = NextPageLayout;
     routePath = nextRoutePath;
 
     return KeepAliveWrap;

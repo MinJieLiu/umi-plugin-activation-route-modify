@@ -1,8 +1,10 @@
 import { IApi } from 'umi-types';
+import { join } from 'path';
 import { generateFlatRouteFunc } from './utils';
 
 interface IOptions {
   exclude: (string | RegExp)[];
+  enablePageLayout?: boolean;
 }
 
 /**
@@ -32,6 +34,15 @@ export default function(api: IApi, options: IOptions) {
     specifier: `wrapChildrenWithKeepAlive`,
   });
 
+  // 添加 layout 布局
+  if (options.enablePageLayout) {
+    const PageLayout = join(api.paths.absSrcPath, 'layouts', 'PageLayout');
+    api.addRouterImport({
+      source: PageLayout,
+      specifier: `PageLayout`,
+    });
+  }
+
   api.modifyRouteComponent((memo, args) => {
     const flatRouteList = getFlatRouteList(api.routes);
     const exclude = options && options.exclude;
@@ -56,10 +67,11 @@ export default function(api: IApi, options: IOptions) {
     if (memo.includes('_dvaDynamic')) {
       const { importPath, webpackChunkName } = args;
       const dynamicImport = `import(/* webpackChunkName: ^${webpackChunkName}^ */'${importPath}')`;
+      const Layout = options.enablePageLayout ? 'PageLayout' : null;
 
       return memo.replace(
         dynamicImport,
-        `${dynamicImport}.then(m => wrapChildrenWithKeepAlive(m.default, '${routePath}'))`,
+        `${dynamicImport}.then(m => wrapChildrenWithKeepAlive(m.default, ${Layout}, '${routePath}'))`,
       );
     }
 
